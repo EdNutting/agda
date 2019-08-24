@@ -9,7 +9,7 @@ Getting Started
 
    what-is-agda
    prerequisites
-   installation
+   installation/index
    hello-world
    quick-guide
    tutorial-list

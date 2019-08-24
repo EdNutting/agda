@@ -35,6 +35,11 @@ Rendering documentation locally
   in ``doc/user-manual``. E.g., call ``make html`` to build the
   documentation in html format.
 
+  You can also call ``make user-manual-html`` from the top-level
+  directory to build the documentation directly in HTML format.
+  Search the top-level Makefile for "user-manual" to find more
+  options.
+
 Type-checking code examples
 ===========================
 

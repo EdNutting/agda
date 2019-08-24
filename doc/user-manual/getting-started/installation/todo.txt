@@ -1,0 +1,17 @@
+TODO:
+    * Pre-built install
+        * Test on the various platforms
+    * Hackage install
+        * Pre-reqs review
+        * Windows, Linux, OSX
+        * Testing
+    * Release from source
+        * Pre-requisites
+        * Instructions
+        * Windows, Linux, OSX
+    * Develop from source
+        * Pre-requisites
+        * Instructions
+        * Windows, Linux, OSX
+    * Fix up Emacs versus Atom for all methods
+    * Ensure coherency of Agda, Agda-stdlib and Emacs/Atom throughout
