@@ -7,8 +7,21 @@ jobs:
   Ubuntu:
     runs-on: ubuntu-16.04
 
+    env:
+      check_run_conditions_dir: './.github/actions/check-run-conditions'
+
     steps:
     - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Install NPM dependencies
+      run: npm ci
+      working-directory: ${{ env.check_run_conditions_dir }}
+
     - uses: ./.github/actions/check-run-conditions
       env:
         repo-token: ${{ secrets.GITHUB_TOKEN }}

@@ -9,4 +9,4 @@ outputs:
     description: 'true if the run should continue, false otherwise.'
 runs:
   using: 'node12'
-  main: 'check-run-conditions.js'
+  main: 'index.js'
