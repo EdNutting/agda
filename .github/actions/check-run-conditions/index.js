@@ -5,9 +5,9 @@ function log(data) {
   console.log(JSON.stringify(data, null, "  "));
 }
 
-function logError(error) {
+function logError(line, error) {
   core.setFailed(error.message);
-  console.error("Something went wrong...", error);
+  console.error(line, error);
 }
 
 async function run() {
@@ -24,7 +24,7 @@ async function run() {
       client = new github.getOctokit(repoToken);
     }
     catch (error) {
-      logError(error);
+      logError("Line 27", error);
     }
 
     try {
@@ -38,11 +38,11 @@ async function run() {
       log(pullRequests);
     }
     catch (error) {
-      logError(error);
+      logError("Line 41", error);
     }
   }
   catch (error) {
-    logError(error);
+    logError("Line 45", error);
   }
 }
 
