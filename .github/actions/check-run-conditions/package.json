@@ -4,6 +4,7 @@
   "description": "Checks whether a run for a `push` event should be shortcircuited.",
   "main": "index.js",
   "scripts": {
+    "run": "node index.js",
     "lint": "eslint index.js",
     "package": "ncc build index.js -o dist",
     "test": "eslint index.js && jest"
