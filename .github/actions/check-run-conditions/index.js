@@ -9,7 +9,7 @@ async function run() {
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
 
-    // log (github.context);
+    log (github.context);
 
     const client = new github.getOctokit(repoToken);
     let pullRequests = await client.pulls.get({
