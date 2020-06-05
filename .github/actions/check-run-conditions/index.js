@@ -66,7 +66,7 @@ async function run() {
   }
 
   log({ shouldContinue });
-  core.setOutput("shouldContinueXXX", shouldContinue);
+  core.setOutput("shouldContinue", shouldContinue);
 }
 
 run()
