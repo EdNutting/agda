@@ -5,6 +5,11 @@ function log(data) {
   console.log(JSON.stringify(data, null, "  "));
 }
 
+function logError(error) {
+  core.setFailed(error.message);
+  console.error("Something went wrong...", error);
+}
+
 async function run() {
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
@@ -14,19 +19,30 @@ async function run() {
     const repo = github.context.payload.repository;
     const ref = github.context.ref;
 
-    const client = new github.getOctokit(repoToken);
-    const pullRequests = await client.pulls.get({
-      owner: repo.owner.login,
-      repo: repo.name,
-      state: "open",
-      base: ref
-    });
+    let client = {};
+    try {
+      client = new github.getOctokit(repoToken);
+    }
+    catch (error) {
+      logError(error);
+    }
 
-    log(pullRequests);
+    try {
+      const pullRequests = await client.pulls.get({
+        owner: repo.owner.login,
+        repo: repo.name,
+        state: "open",
+        base: ref
+      });
+
+      log(pullRequests);
+    }
+    catch (error) {
+      logError(error);
+    }
   }
   catch (error) {
-    core.setFailed(error.message);
-    console.log(error);
+    logError(error);
   }
 }
 
