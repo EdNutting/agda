@@ -31,4 +31,4 @@ jobs:
       if: ${{ steps.run-condition.outputs.shouldContinue }}
 
     - run: "echo 'Bye, bye, world!'"
-      if: ! ${{ steps.run-condition.outputs.shouldContinue }}
+      if: "! ${{ steps.run-condition.outputs.shouldContinue }}"
