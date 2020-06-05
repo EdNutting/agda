@@ -5,7 +5,7 @@ async function run() {
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
 
-    console.log(github.context);
+    console.log(JSON.stringify(github.context, null, "  "));
 
     const client = new github.GitHub(repoToken);
     // await client.pulls.get({
