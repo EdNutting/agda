@@ -27,8 +27,8 @@ jobs:
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - run: "echo 'Hello, world!'"
-      if: ${{ steps.run-condition.outputs.shouldContinue }}
+    - if: ${{ steps.run-condition.outputs.shouldContinue }}
+      run: "echo 'Hello, world!'"
 
-    - run: "echo 'Bye, bye, world!'"
-      if: "! ${{ steps.run-condition.outputs.shouldContinue }}"
+    - if: ${{ ! steps.run-condition.outputs.shouldContinue }}
+      run: "echo 'Bye, bye, world!'"
