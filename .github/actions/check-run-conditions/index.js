@@ -14,18 +14,12 @@ async function run() {
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
 
-    log(github.context);
+    // log(github.context);
     
     const repo = github.context.payload.repository;
     const ref = github.context.ref;
 
-    let client = {};
-    try {
-      client = new github.getOctokit(repoToken);
-    }
-    catch (error) {
-      logError("Line 27", error);
-    }
+    const client = new github.getOctokit(repoToken);
 
     try {
       const pullRequests = await client.pulls.get({
