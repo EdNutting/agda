@@ -18,6 +18,7 @@ async function run() {
     
     const repo = github.context.payload.repository;
     const ref = github.context.ref;
+    const branch = ref.replace("refs/heads/", "");
 
     const client = new github.getOctokit(repoToken);
 
@@ -26,7 +27,7 @@ async function run() {
         owner: repo.owner.login,
         repo: repo.name,
         state: "open",
-        base: ref
+        base: branch
       });
 
       log(pullRequests);
