@@ -27,7 +27,7 @@ async function run() {
         owner: repo.owner.login,
         repo: repo.name,
         state: "open",
-        base: branch
+        head: branch
       });
 
       log(pullRequests);
