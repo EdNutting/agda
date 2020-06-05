@@ -23,5 +23,5 @@ jobs:
       working-directory: ${{ env.check_run_conditions_dir }}
 
     - uses: ./.github/actions/check-run-conditions
-      env:
+      with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
