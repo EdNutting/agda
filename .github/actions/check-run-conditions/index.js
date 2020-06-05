@@ -9,14 +9,17 @@ async function run() {
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
 
-    log (github.context);
+    log(github.context);
+    
+    const repo = github.context.payload.repository;
+    const ref = github.context.ref;
 
     const client = new github.getOctokit(repoToken);
-    let pullRequests = await client.pulls.get({
-      owner: github.context.repository.owner.login,
-      repo: github.context.repository.name,
+    const pullRequests = await client.pulls.get({
+      owner: repo.owner.login,
+      repo: repo.name,
       state: "open",
-      base: github.context.ref
+      base: ref
     });
 
     log(pullRequests);
