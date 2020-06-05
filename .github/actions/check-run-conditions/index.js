@@ -82,7 +82,6 @@ async function run() {
     logWarning(`An error occurred while running the checker script.
  The checker is not functioning so will fail-safe and allow the CI run to continue.`, error);
 
-    // Fail safe: CI runs should continue even if this script starts failing
     shouldContinue = true;
   }
 
