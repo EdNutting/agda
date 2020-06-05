@@ -41,38 +41,19 @@ async function run() {
       head: branch
     });
 
-    let isPullRequestEvent = payload.pull_request !== undefined;
-    let isPushEvent = payload.pusher !== undefined;
-
     let pullRequests = pullRequestsResult.data;
 
     // log(pullRequests);
-    log({
-      isPullRequestEvent,
-      isPushEvent
-    });
 
     if (pullRequests.length > 0) {
-      if (isPullRequestEvent) {
-        // Pull request event
-
-        let allAreWIP = true;
-        for (let request of pullRequests) {
-          // Check whether the pull request is labelled 'wip'
-          // 'Work in progress'
-          let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
-          allAreWIP = allAreWIP && containsWipLabel;
-        }
-        shouldContinue = shouldContinue && !allAreWIP;
+      let allAreWIP = true;
+      for (let request of pullRequests) {
+        // Check whether the pull request is labelled 'wip'
+        // 'Work in progress'
+        let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
+        allAreWIP = allAreWIP && containsWipLabel;
       }
-      else if (isPushEvent) {
-        // Push event
-
-        shouldContinue = false;
-      }
-      else {
-        logError("This action should only be used for Push and Pull Request events.", payload);
-      }
+      shouldContinue = shouldContinue && !allAreWIP;
     }
     else {
       shouldContinue = true;
