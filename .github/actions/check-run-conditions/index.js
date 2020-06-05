@@ -42,8 +42,16 @@ async function run() {
         // Check whether the pull request is labelled 'wip'
         // 'Work in progress'
         let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
+        log({
+          request,
+          containsWipLabel,
+          allAreWIP
+        });
         allAreWIP = allAreWIP && containsWipLabel;
       }
+      log({
+        allAreWIP
+      });
       shouldContinue = shouldContinue && !allAreWIP;
     }
     else {
