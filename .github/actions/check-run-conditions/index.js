@@ -1,13 +1,21 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 
+function showForLog(data) {
+  return JSON.stringify(data, null, "  ");
+}
+
 function log(data) {
-  console.log(JSON.stringify(data, null, "  "));
+  console.log(showForLog(data));
+}
+
+function logError(line, error) {
+  console.warn(line, showForLog(error));
 }
 
 function logError(line, error) {
   core.setFailed(error.message);
-  console.error(line, error);
+  console.error(line, showForLog(error));
 }
 
 async function run() {
@@ -19,6 +27,7 @@ async function run() {
 
     // log(github.context);
     
+    const payload = github.context.payload;
     const repo = github.context.payload.repository;
     const ref = github.context.ref;
     const branch = ref.replace(/^refs\/heads\//, "");
@@ -32,34 +41,42 @@ async function run() {
       head: branch
     });
 
+    let isPullRequestEvent = payload.pull_request !== undefined;
+    let isPushEvent = payload.pusher !== undefined;
+
     let pullRequests = pullRequestsResult.data;
 
     log(pullRequests);
 
     if (pullRequests.length > 0) {
-      let allAreWIP = true;
-      for (let request of pullRequests) {
-        // Check whether the pull request is labelled 'wip'
-        // 'Work in progress'
-        let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
-        log({
-          request,
-          containsWipLabel,
-          allAreWIP
-        });
-        allAreWIP = allAreWIP && containsWipLabel;
+      if (isPullRequestEvent) {
+        // Pull request event
+
+        let allAreWIP = true;
+        for (let request of pullRequests) {
+          // Check whether the pull request is labelled 'wip'
+          // 'Work in progress'
+          let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
+          allAreWIP = allAreWIP && containsWipLabel;
+        }
+        shouldContinue = shouldContinue && !allAreWIP;
       }
-      log({
-        allAreWIP
-      });
-      shouldContinue = shouldContinue && !allAreWIP;
+      else if (isPushEvent) {
+        // Push event
+
+        shouldContinue = false;
+      }
+      else {
+        logError("This action should only be used for Push and Pull Request events.", payload);
+      }
     }
     else {
       shouldContinue = true;
     }
   }
   catch (error) {
-    logError("", error);
+    logWarning(`An error occurred while running the checker script.
+ The checker is not functioning so will fail-safe and allow the CI run to continue.`, error);
 
     // Fail safe: CI runs should continue even if this script starts failing
     shouldContinue = true;
