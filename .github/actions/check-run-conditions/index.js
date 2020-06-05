@@ -11,6 +11,9 @@ function logError(line, error) {
 }
 
 async function run() {
+  // Whether to allow the CI run to continue or not
+  let shouldContinue = true;
+
   try { 
     const repoToken = core.getInput('repo-token', { required: true });
 
@@ -22,23 +25,39 @@ async function run() {
 
     const client = new github.getOctokit(repoToken);
 
-    try {
-      const pullRequests = await client.pulls.list({
-        owner: repo.owner.login,
-        repo: repo.name,
-        state: "open",
-        head: branch
-      });
+    const pullRequestsResult = await client.pulls.list({
+      owner: repo.owner.login,
+      repo: repo.name,
+      state: "open",
+      head: branch
+    });
 
-      log(pullRequests);
+    let pullRequests = pullRequestsResult.data;
+
+    log(pullRequests);
+
+    if (pullRequests.length > 0) {
+      let allAreWIP = true;
+      for (let request of pullRequests) {
+        // Check whether the pull request is labelled 'wip'
+        // 'Work in progress'
+        let containsWipLabel = request.labels.some(label => label == "wip");
+        allAreWIP = allAreWIP && containsWipLabel;
+      }
+      shouldContinue = shouldContinue && !allAreWIP;
     }
-    catch (error) {
-      logError("Line 41", error);
+    else {
+      shouldContinue = true;
     }
   }
   catch (error) {
-    logError("Line 45", error);
+    logError("", error);
+
+    // Fail safe: CI runs should continue even if this script starts failing
+    shouldContinue = true;
   }
+
+  core.setOutput("shouldContinue", shouldContinue);
 }
 
 run()

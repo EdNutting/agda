@@ -22,6 +22,13 @@ jobs:
       run: npm ci
       working-directory: ${{ env.check_run_conditions_dir }}
 
-    - uses: ./.github/actions/check-run-conditions
+    - id: run-condition
+      uses: ./.github/actions/check-run-conditions
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - run: "echo 'Hello, world!'"
+      if: ${{ steps.run-condition.outputs.shouldContinue }}
+
+    - run: "echo 'Bye, bye, world!'"
+      if: ! ${{ steps.run-condition.outputs.shouldContinue }}
