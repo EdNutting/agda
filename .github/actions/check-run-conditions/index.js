@@ -22,7 +22,7 @@ async function run() {
     const client = new github.getOctokit(repoToken);
 
     try {
-      const pullRequests = await client.pulls.get({
+      const pullRequests = await client.pulls.list({
         owner: repo.owner.login,
         repo: repo.name //,
         // state: "open",
