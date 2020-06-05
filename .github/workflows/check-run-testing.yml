@@ -8,6 +8,6 @@ jobs:
     runs-on: ubuntu-16.04
 
     steps:
-    - uses: ./.github/actions/check-run-conditions
+    - uses: ./.github/actions/check-run-conditions.yml
       env:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
