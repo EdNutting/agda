@@ -2,6 +2,7 @@ name: Check run testing
 
 on:
   push:
+  pull_request:
 
 jobs:
   Ubuntu:
