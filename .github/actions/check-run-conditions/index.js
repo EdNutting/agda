@@ -46,7 +46,11 @@ async function run() {
 
     let pullRequests = pullRequestsResult.data;
 
-    log(pullRequests);
+    // log(pullRequests);
+    log({
+      isPullRequestEvent,
+      isPushEvent
+    });
 
     if (pullRequests.length > 0) {
       if (isPullRequestEvent) {
