@@ -24,9 +24,9 @@ async function run() {
     try {
       const pullRequests = await client.pulls.get({
         owner: repo.owner.login,
-        repo: repo.name,
-        state: "open",
-        base: ref
+        repo: repo.name //,
+        // state: "open",
+        // base: ref
       });
 
       log(pullRequests);
