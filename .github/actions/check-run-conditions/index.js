@@ -18,7 +18,7 @@ async function run() {
     
     const repo = github.context.payload.repository;
     const ref = github.context.ref;
-    const branch = ref.replace("refs/heads/", "");
+    const branch = ref.replace(/^refs\/heads\//, "");
 
     const client = new github.getOctokit(repoToken);
 
