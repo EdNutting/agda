@@ -37,8 +37,6 @@ jobs:
   # Necessary: If no jobs run, Github counts the workflow as failed,
   #            which we don't want
   Nop:
-    if: github.event.pull_request.head.repo.id == gtihub.repository.id
-
     runs-on: ubuntu-16.04
     steps:
       - run: "echo \"Nothing to do.\""
