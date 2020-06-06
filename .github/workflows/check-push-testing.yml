@@ -1,0 +1,36 @@
+name: Check push testing
+
+on:
+  push:
+
+jobs:
+  Ubuntu:
+    runs-on: ubuntu-16.04
+
+    env:
+      check_run_conditions_dir: './.github/actions/check-push-conditions'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Install NPM dependencies
+      run: npm ci
+      working-directory: ${{ env.check_run_conditions_dir }}
+
+    - id: run-condition
+      uses: ./.github/actions/check-push-conditions
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    # Should run iff: no PRs exist for the current branch 
+    #              OR any PR for the branch is not labeled 'wip'
+    - if: ${{ steps.run-condition.outputs.shouldContinue == 'true' }}
+      run: "echo 'Hello, world!'"
+
+    - if: ${{ steps.run-condition.outputs.shouldContinue == 'false' }}
+      run: "echo 'Bye, bye, world!'"

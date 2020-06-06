@@ -1,5 +1,6 @@
 # Keep this file in alphabetic order please!
 
+node_modules
 .*.sw[a-p]
 .*.vim
 .cabal-sandbox/

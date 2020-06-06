@@ -1,0 +1,33 @@
+name: Check pull request testing
+
+on:
+  pull_request:
+
+jobs:
+  Ubuntu:
+    runs-on: ubuntu-16.04
+
+    env:
+      check_run_conditions_dir: './.github/actions/check-pull-request-conditions'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+
+    - name: Install NPM dependencies
+      run: npm ci
+      working-directory: ${{ env.check_run_conditions_dir }}
+
+    - id: run-condition
+      uses: ./.github/actions/check-pull-request-conditions
+
+    # Should run iff: the PR event is for a head branch from a fork
+    - if: ${{ steps.run-condition.outputs.shouldContinue == 'true' }}
+      run: "echo 'Hello, world!'"
+
+    - if: ${{ steps.run-condition.outputs.shouldContinue == 'false' }}
+      run: "echo 'Bye, bye, world!'"
