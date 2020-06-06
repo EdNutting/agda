@@ -1,7 +1,7 @@
 {
-  "name": "check-run-conditions",
+  "name": "check-pull-request-conditions",
   "version": "1.0.0",
-  "description": "Checks whether a run for a `push` event should be shortcircuited.",
+  "description": "Checks whether a run for a `pull_request` event should be shortcircuited.",
   "main": "index.js",
   "scripts": {
     "run": "node index.js",

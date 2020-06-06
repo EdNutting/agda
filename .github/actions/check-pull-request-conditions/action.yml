@@ -1,0 +1,8 @@
+name: 'Check pull request conditions'
+description: 'Checks whether a run for a `pull_request` event should be shortcircuited.'
+outputs:
+  shouldContinue:
+    description: 'true if the run should continue, false otherwise.'
+runs:
+  using: 'node12'
+  main: 'index.js'

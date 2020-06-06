@@ -28,7 +28,7 @@ async function run() {
     // log(github.context);
     
     const payload = github.context.payload;
-    const repo = github.context.payload.repository;
+    const repo = payload.repository;
     const ref = github.context.ref;
     const branch = ref.replace(/^refs\/heads\//, "");
 
@@ -46,14 +46,10 @@ async function run() {
     // log(pullRequests);
 
     if (pullRequests.length > 0) {
-      let allAreWIP = true;
-      for (let request of pullRequests) {
-        // Check whether the pull request is labelled 'wip'
-        // 'Work in progress'
-        let containsWipLabel = request.labels.some(labelData => labelData.name == "wip");
-        allAreWIP = allAreWIP && containsWipLabel;
-      }
-      shouldContinue = shouldContinue && !allAreWIP;
+      let isLabelWIP = labelData => labelData.name == "wip";
+      let isPrWIP = pr => pr.labels.some(isLabelWIP);
+      let anyPrIsNotWIP = pullRequests.some(pr => !isPrWIP(pr));
+      shouldContinue = shouldContinue && anyPrIsNotWIP;
     }
     else {
       shouldContinue = true;

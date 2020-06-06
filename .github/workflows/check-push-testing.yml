@@ -2,14 +2,13 @@ name: Check run testing
 
 on:
   push:
-  pull_request:
 
 jobs:
   Ubuntu:
     runs-on: ubuntu-16.04
 
     env:
-      check_run_conditions_dir: './.github/actions/check-run-conditions'
+      check_run_conditions_dir: './.github/actions/check-push-conditions'
 
     steps:
     - uses: actions/checkout@v2
@@ -24,10 +23,12 @@ jobs:
       working-directory: ${{ env.check_run_conditions_dir }}
 
     - id: run-condition
-      uses: ./.github/actions/check-run-conditions
+      uses: ./.github/actions/check-push-conditions
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
+    # Should run iff: no PRs exist for the current branch 
+    #              OR any PR for the branch is not labeled 'wip'
     - if: ${{ steps.run-condition.outputs.shouldContinue == 'true' }}
       run: "echo 'Hello, world!'"
 

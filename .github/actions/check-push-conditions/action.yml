@@ -1,4 +1,4 @@
-name: 'Check run conditions'
+name: 'Check push conditions'
 description: 'Checks whether a run for a `push` event should be shortcircuited.'
 inputs:
   repo-token:
