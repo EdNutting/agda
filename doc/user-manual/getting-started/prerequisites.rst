@@ -4,6 +4,19 @@
 Prerequisites
 *************
 
+.. _prerequisites-prebuilt:
+
+When installing using pre-built packages
+========================================
+
+*This section was last updated on: 24th August 2019 by Ed Nutting*
+
+
+.. _prerequisites-hackage:
+
+When installing using Hackage
+=============================
+
 You need recent versions of the following programs to compile Agda:
 
 * GHC:           https://www.haskell.org/ghc/
@@ -41,6 +54,41 @@ to install *libicu-dev*. Once the ICU library is installed one can
 hopefully enable the :option:`--count-clusters` flag by giving the
 :option:`enable-cluster-counting` flag to *cabal install*.
 
+*This section was last updated on: 24th August 2019 by Ed Nutting*
+
+
+.. _prerequisites-source:
+
+When installing using source
+============================
+
+There are two ways to install from source. 
+Use whichever one has been most successful for you in the past.
+If this is your first time using Agda, use whichever method has 
+worked for you with other Haskell-based tools in the past.
+If this is your fist time using any Haskell-based tool - good luck (try Stack first).
+
+.. _prerequisites-source-stack:
+
+Using Stack
+-----------
+
+TODO
+
+*This section was last updated on: 24th August 2019 by Ed Nutting*
+
+
+.. _prerequisites-source-cabal:
+
+Using Cabal
+-----------
+
+TODO
+
+*This section was last updated on: 24th August 2019 by Ed Nutting*
+
+
+
 .. _emacs-under-windows:
 
 Installing Emacs under Windows
@@ -48,3 +96,5 @@ Installing Emacs under Windows
 
 A precompiled version of Emacs 26.1, with the necessary mathematical
 fonts, is available at http://www.cs.uiowa.edu/~astump/agda.
+
+*This section was last updated on: 24th August 2019 by Ed Nutting*
