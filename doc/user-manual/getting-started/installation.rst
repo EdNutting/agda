@@ -45,9 +45,6 @@ When installing Agda the following flags can be used:
      :option:`--count-clusters` flag triggers an error
      message. Default: off.
 
-.. _exec-path-from-shell: https://github.com/purcell/exec-path-from-shell
-
-
 .. _installing-multiple-versions-of-Agda:
 
 Installing multiple versions of Agda
