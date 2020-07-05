@@ -1,0 +1,140 @@
+.. _prebuilt-packages:
+
+**************************************************
+Prebuilt Packages and System-Specific Instructions
+**************************************************
+
+Arch Linux
+==========
+
+The following prebuilt packages are available:
+
+* `Agda <https://www.archlinux.org/packages/community/x86_64/agda/>`_
+
+* `Agda standard library <https://www.archlinux.org/packages/community/x86_64/agda-stdlib/>`_
+
+However, due to significant packaging bugs such as `this <https://bugs.archlinux.org/task/61904?project=5&string=agda>`_, you might want to use alternative installation methods.
+
+Debian / Ubuntu
+===============
+
+Prebuilt packages are available for Debian and Ubuntu from Karmic onwards. To install:
+
+.. code-block:: bash
+
+  apt-get install agda-mode
+
+This should install Agda and the Emacs mode.
+
+The standard library is available in Debian and Ubuntu from Lucid onwards. To install:
+
+.. code-block:: bash
+
+  apt-get install agda-stdlib
+
+More information:
+
+* `Agda (Debian) <https://tracker.debian.org/pkg/agda>`_
+
+* `Agda standard library (Debian) <https://tracker.debian.org/pkg/agda-stdlib>`_
+
+* `Agda (Ubuntu) <https://launchpad.net/ubuntu/+source/agda>`_
+
+* `Agda standard library (Ubuntu) <https://launchpad.net/ubuntu/+source/agda-stdlib>`_
+
+Reporting bugs:
+
+Please report any bugs to Debian, using:
+
+.. code-block:: bash
+
+  reportbug -B debian agda
+  reportbug -B debian agda-stdlib
+
+Fedora
+======
+
+Agda is packaged in Fedora (since before Fedora 18).
+
+.. code-block:: bash
+
+  yum install Agda
+
+will pull in emacs-agda-mode and ghc-Agda-devel.
+
+FreeBSD
+=======
+
+Packages are available from `FreshPorts
+<https://www.freebsd.org/cgi/ports.cgi?query=agda&stype=all>`_ for
+Agda and Agda standard library.
+
+
+Nix or NixOS
+============
+
+Agda is part of the Nixpkgs collection that is used by
+https://nixos.org/nixos. To install Agda and agda-mode for Emacs,
+type:
+
+.. code-block:: bash
+
+  nix-env -f "<nixpkgs>" -iA haskellPackages.Agda
+
+If you’re just interested in the library, you can also install the
+library without the executable. The Agda standard library is currently
+not installed automatically.
+
+However, if using existing Agda libraries (including the standard library) it
+may be more convenient to use a nix expression for ``nix-shell``.  A third-party
+`example repository
+<https://github.com/bbarker/LearningAgda>`_
+is available to create a ``nix-shell`` environment that loads
+``agda-pkg`` as well as ``agda`` and ``agda-mode`` for emacs.
+
+OS X
+====
+
+`Homebrew <https://brew.sh>`_ is a free and open-source software package
+management system that provides prebuilt packages for OS X. Once it is
+installed in your system, you are ready to install agda. Open the
+Terminal app and run the following command:
+
+.. code-block:: bash
+
+  brew install agda
+
+This process should take less than a minute, and it installs Agda together with
+its Emacs mode and its standard library. For more information about the ``brew``
+command, please refer to the `Homebrew documentation <https://docs.brew.sh/>`_
+and `Homebrew FAQ <https://docs.brew.sh/FAQ>`_.
+
+By default, the standard library is installed in the folder
+``/usr/local/lib/agda/``.  To use the standard library, it is
+convenient to add the location of the agda-lib file ``/usr/local/lib/agda/standard-library.agda-lib``
+to the ``~/.agda/libraries`` file, and write the line ``standard-library`` in
+the ``~/.agda/defaults`` file. To do this, run the following commands:
+
+.. code-block:: bash
+
+  mkdir -p ~/.agda
+  echo /usr/local/lib/agda/standard-library.agda-lib >>~/.agda/libraries
+  echo standard-library >>~/.agda/defaults
+
+Please note that this configuration is not performed automatically. You can
+learn more about :ref:`using the standard library <use-std-lib>` or
+:ref:`using a library in general <use-lib>`.
+
+It is also possible to install with the command-line option keywords
+``--without-stdlib``, ``--without-ghc``, or from ``--HEAD``.  This requires
+building Agda from source.
+
+To configure the way of editing agda files, follow the section
+:ref:`Emacs mode <emacs-mode>`.
+
+.. NOTE::
+
+   If Emacs cannot find the ``agda-mode`` executable, it might help to
+   install the exec-path-from-shell_ package by doing ``M-x
+   package-install RET exec-path-from-shell RET`` and adding the line
+   ``(exec-path-from-shell-initialize)`` to your ``.emacs`` file.
